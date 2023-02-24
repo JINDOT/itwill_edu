@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Fundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- definition : 템플릿 페이지를 설정하기 위한 상위 엘리먼트 -->
+	<!-- name 속성 : definition 엘리먼트의 고유값을 속성값으로 설정 -->
+	<!-- => 요청 처리 메소드의 반환값(ViewName)으로 사용 -->
+	<!-- template 속성 : 템플릿 페이지의 JSP 문서 경로를 속성값으로 설정 - 응답 -->
+	<definition name="main" template="/WEB-INF/views/layout/template.jsp">
+		<!-- put-attribute : 템플릿 페이지를 구성하는 JSP 문서를 지정하기 위한 엘리먼트 -->
+		<!-- name 속성 : put-attribute 엘리먼트의 고유값을 속성값으로 설정 -->
+		<!-- value 속성 : 템플릿 페이지에서 포함하기 위한 JSP 문서의 경로를 속성값으로 설정 -->
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/layout/main.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
+	</definition>
+	
+	<definition name="admin" template="/WEB-INF/views/admin/admin_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/admin/admin_header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/admin/admin_main.jsp"/>
+	</definition>
+	
+	<definition name="admin/*" extends="admin">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp"/>
+	</definition>
+	
+	<definition name="admin/*/*" extends="admin">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- name 속성값을 [*]로 설정한 경우 요청 처리 메소드의 반환값이 [파일명]인 
+	경우 definition 엘리먼트의 템플릿 페이지로 응답되도록 설정 -->
+	<!-- extends 속성 : definition 엘리먼트의 고유값을 속성값으로 설정 -->
+	<!-- => definition 엘리먼트의 템플릿 페이지 정보를 상속받아 사용 -->
+	<definition name="*" extends="main">
+		<!--  name 속성값이 같은 put-attribute 엘리먼트를 선언하여 JSP 문서의 경로 변경 가능 - Override -->
+		<!-- definition 엘리먼트의 name 속성값이 [*] 인경우 put-attribute 엘리먼트의
+		value 속성값에서 {정수값}으로 표현 -->
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+
+	<!-- name 속성값을 [*/*]로 설정한 경우 요청 처리 메소드의 반환값이 [폴더명/파일명]인 
+	경우 definition 엘리먼트의 템플릿 페이지로 응답되도록 설정 -->
+	<definition name="*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- name 속성값을 [*/*/*]로 설정한 경우 요청 처리 메소드의 반환값이 [폴더명/폴더명/파일명]인 
+	경우 definition 엘리먼트의 템플릿 페이지로 응답되도록 설정 -->
+	<definition name="*/*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	</definition>	
+</tiles-definitions>	
+
+
+
+
+
+
